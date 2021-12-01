@@ -113,22 +113,3 @@ class Algo:
                         solAccepted = tempSol
             TC *= coeff
             print(self.bestSol)
-
-a = Algo(10,3,10,[7660,7290,7040,6890,5860,5090,4640,3830,3460,580])
-"""a.matDiv = [
-    [2430, 2430, 2240, 560],
-    [2430,2430,2430],
-    [2430,2430,2180],
-    [2430,2240,2220],
-    [2430,2240,610,580],
-    [2240,2240,610],
-    [2430,2210],
-    [2240,610,610,370],
-    [2240,610,610],
-    [580]
-]
-a.calc_solution()"""
-a.simalated_annealing()
-print(a.code)
-print(a.matDiv)
-print(a.bestSol)
