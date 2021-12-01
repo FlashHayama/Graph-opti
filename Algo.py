@@ -10,7 +10,7 @@ class Algo:
         self.E = E
         self.nbrs = nbrs
         self.code = [None] * self.N
-        self.bestSol = math.inf
+        self.bestSol = 0
         self.matDiv = []
 
     def get_last_max_in_code(self) -> int:
@@ -23,6 +23,7 @@ class Algo:
         return max
 
     def division(self):
+        self.matDiv = []
         for i in range(self.N):
             self.matDiv.append([])
             d = self.nbrs[i] // self.code[i]
@@ -35,12 +36,13 @@ class Algo:
         pass
 
     def calc_solution(self):
+        self.division()
         t = Tri()
         tab = t.fusion(self.matDiv)
         sol = 0
         for i in range(self.B):
             sol += tab[i*self.E]
-        print(sol)
+        return sol
 
     def random_solution(self):
         BE = (self.B * self.E)
@@ -69,11 +71,6 @@ class Algo:
 
         self.code[randIndexDown] -= randMoove
         self.code[randIndexUp] += randMoove
-        
-        print(randIndexDown)
-        print(randIndexUp)
-        print(randMoove)
-        print(self.code)
 
     def moove1(self, step, m):
         """ Max to next index from step
@@ -93,26 +90,29 @@ class Algo:
         T0 = 100
         TF = 0.1
         TC = T0
-        iter = 10
+        iter = 100
         coeff = 0.9
         self.random_solution()
         solAccepted = self.calc_solution()
+        self.bestSol = solAccepted
 
         while TC > TF:
+            self.random_moove()
+            tempSol = self.calc_solution()
             for i in range(iter):
-                self.random_moove()
+                self.moove1(1,1)
                 tempSol = self.calc_solution()
-
-                if tempSol > self.bestSol:
+                if tempSol < self.bestSol:
                     self.bestSol = tempSol
-                if tempSol > solAccepted:
+                if tempSol < solAccepted:
                     solAccepted = tempSol
-                elif tempSol < solAccepted:
-                    P = math.exp(-((solAccepted - tempSol)/TC))
+                elif tempSol > solAccepted:
+                    P = math.exp(-((tempSol - solAccepted)/TC))
                     probAccept = random.random()
                     if P > probAccept:
                         solAccepted = tempSol
             TC *= coeff
+            print(self.bestSol)
 
 a = Algo(10,3,10,[7660,7290,7040,6890,5860,5090,4640,3830,3460,580])
 """a.matDiv = [
@@ -128,7 +128,7 @@ a = Algo(10,3,10,[7660,7290,7040,6890,5860,5090,4640,3830,3460,580])
     [580]
 ]
 a.calc_solution()"""
-a.code = [4,3,3,3,4,3,2,4,3,1]
-a.division()
+a.simalated_annealing()
+print(a.code)
 print(a.matDiv)
-a.calc_solution()
+print(a.bestSol)
