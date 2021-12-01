@@ -2,15 +2,15 @@ class Tri:
     def __init__(self) -> None:
         pass
     
-    def fusion(tableau):
+    def fusion(self,tableau):
         tableauTrie = []
         for i in range(0,len(tableau)):
-            tableauTrie = fusion(tableauTrie,tableau[i])
+            tableauTrie = self.tri_fusion(tableauTrie,tableau[i])
                 
         return tableauTrie
                     
 
-    def triFusion(tableau1,tableau2):
+    def tri_fusion(self,tableau1,tableau2):
         indice_tableau1 = 0
         indice_tableau2 = 0    
         taille_tableau1 = len(tableau1)
