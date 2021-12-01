@@ -13,6 +13,15 @@ class Algo:
         self.bestSol = math.inf
         self.matDiv = []
 
+    def get_last_max_in_code(self) -> int:
+        """ return last occurence of max
+        """
+        max = 0
+        for i in range(self.N):
+            if self.code[i] >= self.code[max]:
+                max = i
+        return max
+
     def division(self):
         pass
 
@@ -57,8 +66,19 @@ class Algo:
         print(randMoove)
         print(self.code)
 
-    def moove1(self):
-        pass
+    def moove1(self, step, m):
+        """ Max to next index from step
+        """
+        max = self.get_last_max_in_code()
+        next = max + step
+        if next >= self.N: next -= self.N
+        if self.code[max] > m:
+            self.code[max] -= m
+            self.code[next] += m
+        else :
+            n = self.code[max] - 1
+            self.code[max] -= n
+            self.code[next] += n
 
     def simalated_annealing(self):
         T0 = 100
@@ -86,7 +106,7 @@ class Algo:
             TC *= coeff
 
 a = Algo(10,3,10,{})
-a.matDiv = [
+"""a.matDiv = [
     [2430, 2430, 2240, 560],
     [2430,2430,2430],
     [2430,2430,2180],
@@ -98,4 +118,7 @@ a.matDiv = [
     [2240,610,610],
     [580]
 ]
-a.calc_solution()
+a.calc_solution()"""
+a.random_solution()
+a.moove1(4)
+print(a.code)

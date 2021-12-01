@@ -2,8 +2,8 @@ class Lecture:
     def __init__(self) -> None:
         pass
 
-    def lecture_donnee():
-        with open("data/data1.dat","r") as f:
+    def lecture_donnee(self,num):
+        with open("data/data" + num + ".dat","r") as f:
             nbrs = list()
             is_integer = 0
             for line in f:
