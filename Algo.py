@@ -113,3 +113,6 @@ class Algo:
                         solAccepted = tempSol
             TC *= coeff
             print(self.bestSol)
+
+    def __str__(self):
+        pass
