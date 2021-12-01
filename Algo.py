@@ -23,6 +23,15 @@ class Algo:
         return max
 
     def division(self):
+        for i in range(self.N):
+            self.matDiv.append([])
+            d = self.nbrs[i] // self.code[i]
+            r = self.nbrs[i] % self.code[i]
+            for j in range(self.code[i]):
+                self.matDiv[i].append(d)
+                if r > 0:
+                    self.matDiv[i][j] += 1
+                    r -=1
         pass
 
     def calc_solution(self):
@@ -105,7 +114,7 @@ class Algo:
                         solAccepted = tempSol
             TC *= coeff
 
-a = Algo(10,3,10,{})
+a = Algo(10,3,10,[7660,7290,7040,6890,5860,5090,4640,3830,3460,580])
 """a.matDiv = [
     [2430, 2430, 2240, 560],
     [2430,2430,2430],
@@ -119,6 +128,7 @@ a = Algo(10,3,10,{})
     [580]
 ]
 a.calc_solution()"""
-a.random_solution()
-a.moove1(4)
-print(a.code)
+a.code = [4,3,3,3,4,3,2,4,3,1]
+a.division()
+print(a.matDiv)
+a.calc_solution()
