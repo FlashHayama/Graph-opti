@@ -4,9 +4,9 @@ from Lecture import Lecture
 
 l = Lecture()
 l.lecture_donnee(10)
-print(l.N)
-print(l.B)
-print(l.E)
+print("Quantité de nombre à traiter :          ",l.N)
+print("Quntité de boite à créer :              ",l.B)
+print("Quantité d'emplacement dans les boite : ",l.E)
 print(l.nbrs)
 
 a = Algo(l.N,l.B,l.E,l.nbrs)
