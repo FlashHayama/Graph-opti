@@ -11,6 +11,6 @@ print(l.nbrs)
 
 a = Algo(l.N,l.B,l.E,l.nbrs)
 a.simalated_annealing()
-print(a.code)
-print(a.matDiv)
+print(a.bestCode)
+print(a.BestMatDiv)
 print(a.bestSol)

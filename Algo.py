@@ -9,101 +9,109 @@ class Algo:
         self.B = B
         self.E = E
         self.nbrs = nbrs
-        self.code = [None] * self.N
+        self.bestCode = [None] * self.N
         self.bestSol = 0
-        self.matDiv = []
+        self.BestMatDiv = []
 
-    def get_last_max_in_code(self) -> int:
+    def get_last_max_in_code(self,code) -> int:
         """ return last occurence of max
         """
         max = 0
         for i in range(self.N):
-            if self.code[i] >= self.code[max]:
+            if code[i] >= code[max]:
                 max = i
         return max
 
-    def division(self):
-        self.matDiv = []
+    def division(self,code) -> list:
+        tempMatDiv = []
         for i in range(self.N):
-            self.matDiv.append([])
-            d = self.nbrs[i] // self.code[i]
-            r = self.nbrs[i] % self.code[i]
-            for j in range(self.code[i]):
-                self.matDiv[i].append(d)
+            tempMatDiv.append([])
+            d = self.nbrs[i] // code[i]
+            r = self.nbrs[i] % code[i]
+            for j in range(code[i]):
+                tempMatDiv[i].append(d)
                 if r > 0:
-                    self.matDiv[i][j] += 1
+                    tempMatDiv[i][j] += 1
                     r -=1
-        pass
+        return tempMatDiv
+        
 
-    def calc_solution(self):
-        self.division()
+    def calc_solution(self,code) -> tuple:
+        matDiv = self.division(code)
         t = Tri()
-        tab = t.fusion(self.matDiv)
+        tab = t.fusion(matDiv)
         sol = 0
         for i in range(self.B):
             sol += tab[i*self.E]
-        return sol
+        return sol,matDiv
 
-    def random_solution(self):
+    def random_solution(self) -> list:
+        code = self.bestCode[:]
         BE = (self.B * self.E)
         for i in range(self.N):
             r = random.randint(1,(BE // self.N) + (self.N // 2))
-            self.code[i] = r
-        if sum(self.code) > BE:
-            dif = sum(self.code) - BE
+            code[i] = r
+        if sum(code) > BE:
+            dif = sum(code) - BE
             for j in range(dif):
-                self.code[self.code.index(max(self.code))] -= 1
-        elif(sum(self.code) < BE):
-            dif = BE - sum(self.code)
+                code[code.index(max(code))] -= 1
+        elif(sum(code) < BE):
+            dif = BE - sum(code)
             for j in range(dif):
-                self.code[self.code.index(min(self.code))] += 1
-        print(self.code)
-        print(sum(self.code))
+                code[code.index(min(code))] += 1
+        return code
 
-    def random_moove(self):
+    def random_moove(self,code) -> list:
+        tempCode = code[:]
         randIndexDown = random.randint(0,self.N - 1)
-        while self.code[randIndexDown] == 1:
+        while tempCode[randIndexDown] == 1:
             randIndexDown = random.randint(0,self.N - 1)
-        randMoove = random.randint(1,self.code[randIndexDown] - 1)
+        randMoove = random.randint(1,tempCode[randIndexDown] - 1)
         randIndexUp = random.randint(0,self.N - 1)
         while randIndexUp == randIndexDown:
             randIndexUp = random.randint(0, self.N - 1)
 
-        self.code[randIndexDown] -= randMoove
-        self.code[randIndexUp] += randMoove
+        tempCode[randIndexDown] -= randMoove
+        tempCode[randIndexUp] += randMoove
+        return tempCode
 
-    def moove1(self, step, m):
+    def moove1(self, code, step, m):
         """ Max to next index from step
         """
-        max = self.get_last_max_in_code()
+        tempCode = code[:]
+        max = self.get_last_max_in_code(tempCode)
         next = max + step
         if next >= self.N: next -= self.N
-        if self.code[max] > m:
-            self.code[max] -= m
-            self.code[next] += m
+        if tempCode[max] > m:
+            tempCode[max] -= m
+            tempCode[next] += m
         else :
-            n = self.code[max] - 1
-            self.code[max] -= n
-            self.code[next] += n
+            n = tempCode[max] - 1
+            tempCode[max] -= n
+            tempCode[next] += n
+        return tempCode
 
     def simalated_annealing(self):
-        T0 = 100
+        matDiv = []
+        T0 = 1000
         TF = 0.1
         TC = T0
         iter = 100
-        coeff = 0.9
-        self.random_solution()
-        solAccepted = self.calc_solution()
+        coeff = 0.99
+        code = self.random_solution()
+        solAccepted,matDiv = self.calc_solution(code)
         self.bestSol = solAccepted
 
         while TC > TF:
-            self.random_moove()
-            tempSol = self.calc_solution()
+            code = self.random_moove(code)
+            tempSol,matDiv = self.calc_solution(code)
             for i in range(iter):
-                self.moove1(1,1)
-                tempSol = self.calc_solution()
+                code = self.moove1(code,1,1)
+                tempSol,matDiv = self.calc_solution(code)
                 if tempSol < self.bestSol:
                     self.bestSol = tempSol
+                    self.bestCode = code[:]
+                    self.BestMatDiv = matDiv[:]
                 if tempSol < solAccepted:
                     solAccepted = tempSol
                 elif tempSol > solAccepted:
