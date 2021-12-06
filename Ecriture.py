@@ -19,5 +19,5 @@ class Ecriture:
            
             file.write(str(tabTrie[a.E*iterB])+"\n")
 
-        file.write("CODE  "+str(a.bestSol))
+        file.write("COST  "+str(a.bestSol))
         file.close()

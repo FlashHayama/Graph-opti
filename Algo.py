@@ -167,6 +167,20 @@ class Algo:
                         solAccepted = tempSol
             TC *= coeff
             print(self.bestSol)
+            
+    def Variable_neighborhood(self, *f):
+        iter = 100
+        length = len(f)
+        k = 0
+        localSearch = f[0]
+        code = self.random_solution()
+        self.bestSol = self.calc_solution(code)
+        sol1 = self.bestSol
+        sol2 = self.bestSol
+        for i in range(iter):
+            k = 1
+            while k < length:
+                pass
 
     def __str__(self) -> str:
         pass
