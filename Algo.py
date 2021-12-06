@@ -168,7 +168,7 @@ class Algo:
         code[next] = tempcode
         return code
 
-    def simalated_annealing(self, code,T0 = 100,TF = 0.1,iter = 10,coeff = 0.9):
+    def simalated_annealing(self, code,intensification,diversification,T0 = 100,TF = 0.1,iter = 10,coeff = 0.9):
         """Simulated annealing metaheuristics
 
         Args:
@@ -183,10 +183,10 @@ class Algo:
         self.bestSol = solAccepted
 
         while TC > TF:
-            code = self.random_moove(code)
+            code = diversification(code)
             tempSol,matDiv = self.calc_solution(code)
             for i in range(iter):
-                code = self.moove1(code,1,1)
+                code = intensification(code,i)
                 tempSol,matDiv = self.calc_solution(code)
                 if tempSol < self.bestSol:
                     self.bestSol = tempSol
