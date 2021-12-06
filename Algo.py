@@ -159,6 +159,14 @@ class Algo:
         code[current] = code[next]
         code[next] = tempcode
         return code
+    
+    def transposition_moove(self, code, iter, step = 1, m = 1)-> list:
+        current = iter % self.N
+        next = (current + random.randint(0,self.N-1)) % self.N
+        tempcode = code[current]
+        code[current] = code[next]
+        code[next] = tempcode
+        return code
 
     def simalated_annealing(self, code,T0 = 100,TF = 0.1,iter = 10,coeff = 0.9):
         """Simulated annealing metaheuristics
