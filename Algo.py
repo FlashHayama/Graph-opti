@@ -14,7 +14,12 @@ class Algo:
         self.BestMatDiv = []
 
     def get_last_max_in_code(self,code) -> int:
-        """ return last occurence of max
+        """ Search last occurence of max
+        Args:
+            code (list): Code of the actual solution
+        
+        Returns: 
+            int: Last maximum of the solution
         """
         max = 0
         for i in range(self.N):
@@ -23,6 +28,14 @@ class Algo:
         return max
 
     def division(self,code) -> list:
+        """Divide each element of nbrs by the number in code
+
+        Args:
+            code (list): Code of the actual solution
+
+        Returns:
+            list: Matrix representing the division of numbers in nbrs
+        """
         tempMatDiv = []
         for i in range(self.N):
             tempMatDiv.append([])
@@ -37,6 +50,14 @@ class Algo:
         
 
     def calc_solution(self,code) -> tuple:
+        """Calculate the solution with a matrix send by division
+
+        Args:
+            code (list): Code of the actual solution
+
+        Returns:
+            tuple: Return solution and new matrix
+        """
         matDiv = self.division(code)
         t = Tri()
         tab = t.fusion(matDiv)
@@ -46,6 +67,11 @@ class Algo:
         return sol,matDiv
 
     def random_solution(self) -> list:
+        """Find a random solution for code so that the sum of the numbers makes B * E
+
+        Returns:
+            list: Code of the new solution
+        """
         code = self.bestCode[:]
         BE = (self.B * self.E)
         for i in range(self.N):
@@ -62,6 +88,14 @@ class Algo:
         return code
 
     def random_moove(self,code) -> list:
+        """Randomly move on code
+
+        Args:
+            code (list): Code of the old solution
+
+        Returns:
+            list: Code of the new solution
+        """
         tempCode = code[:]
         randIndexDown = random.randint(0,self.N - 1)
         while tempCode[randIndexDown] == 1:
@@ -75,8 +109,16 @@ class Algo:
         tempCode[randIndexUp] += randMoove
         return tempCode
 
-    def moove1(self, code, step, m):
-        """ Max to next index from step
+    def moove1(self, code, step, m) -> list:
+        """Max to next index from step
+
+        Args:
+            code (list): Code of the old solution
+            step (int): Number of jumps on code
+            m (int): Value move to code
+
+        Returns:
+            list: Code of the new solution
         """
         tempCode = code[:]
         max = self.get_last_max_in_code(tempCode)
@@ -91,13 +133,17 @@ class Algo:
             tempCode[next] += n
         return tempCode
 
-    def simalated_annealing(self):
+    def simalated_annealing(self,T0 = 100,TF = 0.1,iter = 10,coeff = 0.9):
+        """Simulated annealing metaheuristics
+
+        Args:
+            T0 (int, optional): Initial temperature. Defaults to 100.
+            TF (float, optional): Final temperature. Defaults to 0.1.
+            iter (int, optional): Number of iterations at constant temperature. Defaults to 10.
+            coeff (float, optional): Temperature decay coefficient. Defaults to 0.9.
+        """
         matDiv = []
-        T0 = 1000
-        TF = 0.1
         TC = T0
-        iter = 100
-        coeff = 0.99
         code = self.random_solution()
         solAccepted,matDiv = self.calc_solution(code)
         self.bestSol = solAccepted
@@ -122,5 +168,5 @@ class Algo:
             TC *= coeff
             print(self.bestSol)
 
-    def __str__(self):
+    def __str__(self) -> str:
         pass

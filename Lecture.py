@@ -7,6 +7,11 @@ class Lecture:
         pass
 
     def lecture_donnee(self,num):
+        """Read the file of an instance
+
+        Args:
+            num (int): Number of instance
+        """
         with open("data/data" + str(num) + ".dat","r") as f:
             is_integer = 0
             for line in f:
