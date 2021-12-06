@@ -185,4 +185,20 @@ class Algo:
                 code2 = localSearch(code)
 
     def __str__(self) -> str:
-        pass
+        str_Result = ""
+        for i in range(self.N):
+            str_Result+=(str(i+1)+"\t"+str(self.nbrs[i])+"\t"+str(self.bestCode[i])+"\t")
+            for j in range(self.bestCode[i]):
+                str_Result+=(str(self.BestMatDiv[i][j])+" ")
+
+            str_Result+=("\n")
+        t = Tri()
+        tabTrie = t.fusion(self.BestMatDiv)
+        for iterB in range(self.B):
+            str_Result+=("B"+str(iterB+1)+"\t")
+           
+            str_Result+=(str(tabTrie[self.E*iterB])+"\n")
+
+        str_Result+=("COST  "+str(self.bestSol))
+        return str_Result
+        

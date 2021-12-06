@@ -20,3 +20,4 @@ a.Variable_neighborhood(a.moove1,a.random_moove)
 
 e = Ecriture()
 e.ecriture_donnee(a)
+print(a)
