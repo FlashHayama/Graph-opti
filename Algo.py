@@ -169,18 +169,20 @@ class Algo:
             print(self.bestSol)
             
     def Variable_neighborhood(self, *f):
+        matDiv = []
         iter = 100
         length = len(f)
         k = 0
         localSearch = f[0]
         code = self.random_solution()
-        self.bestSol = self.calc_solution(code)
-        sol1 = self.bestSol
-        sol2 = self.bestSol
+        sol,self.BestMatDiv = self.calc_solution(code)
+        self.bestSol = sol
+        code1 = code
+        code2 = code
         for i in range(iter):
-            k = 1
+            k = 0
             while k < length:
-                pass
+                code2 = localSearch(code)
 
     def __str__(self) -> str:
         pass
