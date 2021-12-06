@@ -212,6 +212,8 @@ class Algo:
         sol,matDiv = self.calc_solution(code)
         sol2 = 0
         self.bestSol = sol
+        self.bestCode = code[:]
+        self.BestMatDiv = matDiv[:]
         code1 = code
         code2 = code
         for i in range(iter):
@@ -227,7 +229,7 @@ class Algo:
                 if sol2 < self.bestSol:
                     self.bestSol = sol2
                     self.bestCode = code2[:]
-                    self.BestMatDiv = matDiv2
+                    self.BestMatDiv = matDiv2[:]
                     print(self.bestSol)
 
     def __str__(self) -> str:
