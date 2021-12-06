@@ -18,3 +18,4 @@ print(a.bestSol)
 
 e = Ecriture()
 e.ecriture_donnee(a)
+print(a)
