@@ -86,8 +86,18 @@ class Algo:
             for j in range(dif):
                 code[code.index(min(code))] += 1
         return code
+    
+    def balanced_solution(self):
+        BE = (self.B * self.E)
+        s = BE // self.N
+        r = BE % self.N
+        code = [s] * self.N
+        for i in range(r):
+            code[i] += 1
+        return code
+        
 
-    def random_moove(self,code) -> list:
+    def random_moove(self,code, iter = 0) -> list:
         """Randomly move on code
 
         Args:
@@ -109,7 +119,7 @@ class Algo:
         tempCode[randIndexUp] += randMoove
         return tempCode
 
-    def moove1(self, code, step = 1, m = 1) -> list:
+    def moove1(self, code, iter = 0, step = 1, m = 1) -> list:
         """Max to next index from step
 
         Args:
@@ -132,8 +142,25 @@ class Algo:
             tempCode[max] -= n
             tempCode[next] += n
         return tempCode
+    
+    def basic_moove(self, code, iter, step = 1, m = 1) -> list:
+        current = iter % self.N
+        next = (current + step) % self.N
+        if code[current] > m:
+            code[current] -= m
+            code[next] += m
+        else : self.basic_moove(code,iter + 1)
+        return code
+    
+    def inverse_moove(self, code, iter, step = 1, m = 1)-> list:
+        current = iter % self.N
+        next = (current + step) % self.N
+        tempcode = code[current]
+        code[current] = code[next]
+        code[next] = tempcode
+        return code
 
-    def simalated_annealing(self,T0 = 100,TF = 0.1,iter = 10,coeff = 0.9):
+    def simalated_annealing(self, code,T0 = 100,TF = 0.1,iter = 10,coeff = 0.9):
         """Simulated annealing metaheuristics
 
         Args:
@@ -144,7 +171,6 @@ class Algo:
         """
         matDiv = []
         TC = T0
-        code = self.random_solution()
         solAccepted,matDiv = self.calc_solution(code)
         self.bestSol = solAccepted
 
@@ -173,6 +199,7 @@ class Algo:
         matDiv2 = []
         length = len(f)
         k = 0
+        j = 0
         localSearch = f[0]
         sol,matDiv = self.calc_solution(code)
         sol2 = 0
@@ -182,8 +209,9 @@ class Algo:
         for i in range(iter):
             k = 0
             while k < length:
-                code1 = f[k](code)
-                code2 = localSearch(code1)
+                if k > 0 : code1 = f[k](code[:],j)
+                code2 = localSearch(code1[:],j)
+                j += 1
                 sol,matDiv = self.calc_solution(code)
                 sol2,matDiv2 = self.calc_solution(code2)
                 if sol2 < sol: code = code2[:]
