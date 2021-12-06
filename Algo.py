@@ -109,7 +109,7 @@ class Algo:
         tempCode[randIndexUp] += randMoove
         return tempCode
 
-    def moove1(self, code, step, m) -> list:
+    def moove1(self, code, step = 1, m = 1) -> list:
         """Max to next index from step
 
         Args:
@@ -158,6 +158,7 @@ class Algo:
                     self.bestSol = tempSol
                     self.bestCode = code[:]
                     self.BestMatDiv = matDiv[:]
+                    print(self.bestSol)
                 if tempSol < solAccepted:
                     solAccepted = tempSol
                 elif tempSol > solAccepted:
@@ -166,23 +167,32 @@ class Algo:
                     if P > probAccept:
                         solAccepted = tempSol
             TC *= coeff
-            print(self.bestSol)
             
-    def Variable_neighborhood(self, *f):
+    def Variable_neighborhood(self,code,iter = 100, *f):
         matDiv = []
-        iter = 100
+        matDiv2 = []
         length = len(f)
         k = 0
         localSearch = f[0]
-        code = self.random_solution()
-        sol,self.BestMatDiv = self.calc_solution(code)
+        sol,matDiv = self.calc_solution(code)
+        sol2 = 0
         self.bestSol = sol
         code1 = code
         code2 = code
         for i in range(iter):
             k = 0
             while k < length:
-                code2 = localSearch(code)
+                code1 = f[k](code)
+                code2 = localSearch(code1)
+                sol,matDiv = self.calc_solution(code)
+                sol2,matDiv2 = self.calc_solution(code2)
+                if sol2 < sol: code = code2[:]
+                else : k += 1
+                if sol2 < self.bestSol:
+                    self.bestSol = sol2
+                    self.bestCode = code2[:]
+                    self.BestMatDiv = matDiv2
+                    print(self.bestSol)
 
     def __str__(self) -> str:
         str_Result = ""

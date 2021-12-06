@@ -11,12 +11,9 @@ print("Quantité d'emplacement dans les boite : ",l.E)
 print(l.nbrs)
 
 a = Algo(l.N,l.B,l.E,l.nbrs)
-a.simalated_annealing(1000,0.1,100,0.9)
-print(a.bestCode)
-print(a.BestMatDiv)
-print(a.bestSol)
+#a.simalated_annealing(1000,0.1,100,0.9)
 
-a.Variable_neighborhood(a.moove1,a.random_moove)
+a.Variable_neighborhood(a.random_solution(),100,a.moove1,a.random_moove)
 
 e = Ecriture()
 e.ecriture_donnee(a)
