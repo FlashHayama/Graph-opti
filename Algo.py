@@ -1,5 +1,6 @@
 import math
 import random
+from types import new_class
 from Tri import Tri
 
 class Algo:
@@ -145,7 +146,11 @@ class Algo:
     
     def basic_moove(self, code, iter, step = 1, m = 1) -> list:
         current = iter % self.N
+        iniCurrent = (iter // self.N) % int(math.sqrt(self.N))
         next = (current + step) % self.N
+        if current == 0 and code[iniCurrent] > m:
+            code[iniCurrent] -= m
+            code[next] += m
         if code[current] > m:
             code[current] -= m
             code[next] += m
@@ -181,6 +186,8 @@ class Algo:
         TC = T0
         solAccepted,matDiv = self.calc_solution(code)
         self.bestSol = solAccepted
+        self.BestMatDiv = matDiv[:]
+        self.bestCode = code[:]
 
         while TC > TF:
             code = diversification(code)
