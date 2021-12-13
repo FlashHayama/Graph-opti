@@ -188,9 +188,11 @@ class Algo:
         self.bestSol = solAccepted
         self.BestMatDiv = matDiv[:]
         self.bestCode = code[:]
+        j = 0
 
         while TC > TF:
-            code = diversification(code)
+            code = diversification(code,j)
+            j += 1
             tempSol,matDiv = self.calc_solution(code)
             for i in range(iter):
                 code = intensification(code,i)
