@@ -14,7 +14,7 @@ print(l.nbrs)
 
 a = Algo(l.N,l.B,l.E,l.nbrs)
 
-a.Variable_neighborhood(a.balanced_solution(),10000,a.basic_moove,a.moove1,a.inverse_moove,a.transposition_moove,a.random_moove)
+a.Variable_neighborhood(a.balanced_solution(),10000,a.basic_moove,a.moove_from_max,a.inverse_moove,a.transposition_moove,a.random_moove)
 #a.simalated_annealing(a.bestCode,a.basic_moove,a.random_moove,100,0.1,100,0.99)
 
 e = Ecriture()

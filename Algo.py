@@ -120,7 +120,7 @@ class Algo:
         tempCode[randIndexUp] += randMoove
         return tempCode
 
-    def moove1(self, code, iter = 0, step = 1, m = 1) -> list:
+    def moove_from_max(self, code, iter = 0, step = 1, m = 1) -> list:
         """Max to next index from step
 
         Args:
