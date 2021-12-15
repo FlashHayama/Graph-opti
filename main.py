@@ -18,7 +18,7 @@ a.Variable_neighborhood(a.balanced_solution(),10000,a.basic_moove,a.moove_from_m
 #a.simalated_annealing(a.bestCode,a.basic_moove,a.random_moove,100,0.1,100,0.99)
 
 e = Ecriture()
-e.ecriture_donnee(a)
+e.ecriture_donnee(a,"instance1")
 print(a)
 
 
