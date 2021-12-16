@@ -68,7 +68,7 @@ class Algo:
         return sol,matDiv
 
     def random_solution(self) -> list:
-        """Find a random solution for code so that the sum of the numbers makes B * E
+        """Create a random solution for code so that the sum of the numbers makes B * E
 
         Returns:
             list: Code of the new solution
@@ -89,6 +89,11 @@ class Algo:
         return code
     
     def balanced_solution(self):
+        """Create a balanced solution for the sum of the numbers makes B * E
+
+        Returns:
+            list: Code of the new solution
+        """
         BE = (self.B * self.E)
         s = BE // self.N
         r = BE % self.N
@@ -103,6 +108,7 @@ class Algo:
 
         Args:
             code (list): Code of the old solution
+            iter (int): Use for abstraction with other fonction 
 
         Returns:
             list: Code of the new solution
@@ -125,6 +131,7 @@ class Algo:
 
         Args:
             code (list): Code of the old solution
+            iter (int): Use for abstraction with other fonction 
             step (int): Number of jumps on code
             m (int): Value move to code
 
@@ -145,6 +152,17 @@ class Algo:
         return tempCode
     
     def basic_moove(self, code, iter, step = 1, m = 1) -> list:
+        """Make a movement from iter to next 
+
+        Args:
+            code (list): Code of the old solution
+            iter (int): Index where the movement begins
+            step (int, optional): jump count of the movement. Defaults to 1.
+            m (int, optional): shifted value. Defaults to 1.
+
+        Returns:
+            list: Code of the new solution
+        """
         current = iter % self.N
         iniCurrent = (iter // self.N) % int(math.sqrt(self.N))
         next = (current + step) % self.N
@@ -158,6 +176,17 @@ class Algo:
         return code
     
     def inverse_moove(self, code, iter, step = 1, m = 1)-> list:
+        """Inverts the value of iter with the following value
+
+        Args:
+            code (list): Code of the old solution
+            iter (int): Index where the movement begins
+            step (int, optional): jump count of the movement. Defaults to 1.
+            m (int, optional): shifted value. Defaults to 1.
+
+        Returns:
+            list: Code of the new solution
+        """
         current = iter % self.N
         next = (current + step) % self.N
         tempcode = code[current]
@@ -166,6 +195,17 @@ class Algo:
         return code
     
     def transposition_moove(self, code, iter, step = 1, m = 1)-> list:
+        """Transpose the value of iter with the value of a random index
+
+        Args:
+            code (list): Code of the old solution
+            iter (int): Index where the movement begins
+            step (int, optional): jump count of the movement. Defaults to 1.
+            m (int, optional): shifted value. Defaults to 1.
+
+        Returns:
+            list: Code of the new solution
+        """
         current = iter % self.N
         next = (current + random.randint(0,self.N-1)) % self.N
         tempcode = code[current]
@@ -177,6 +217,9 @@ class Algo:
         """Simulated annealing metaheuristics
 
         Args:
+            code (list): Starting solution code
+            intensification (method): Method for the intensification
+            diversification (method): Method for the diversification
             T0 (int, optional): Initial temperature. Defaults to 100.
             TF (float, optional): Final temperature. Defaults to 0.1.
             iter (int, optional): Number of iterations at constant temperature. Defaults to 10.
@@ -212,6 +255,13 @@ class Algo:
             TC *= coeff
             
     def Variable_neighborhood(self,code,iter = 100, *f):
+        """Variable neighborhood metaheuristics
+
+        Args:
+            code (list): Starting solution code.
+            iter (int, optional): Number of iterations made by the method. Defaults to 100.
+            f (list of methods): list of methods used ranging from intensification to diversification.
+        """
         matDiv = []
         matDiv2 = []
         length = len(f)
